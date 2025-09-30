@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import in.abhayit.Entity.UserRegister;
 import in.abhayit.Model.LoginRequestDto;
@@ -104,5 +108,29 @@ public class UserRegisterController {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(HttpURLConnection.HTTP_INTERNAL_ERROR,Constants.FAILED,"Internal server error"));
 	    }
 	}
-}
+
+
+
+//---------------------------------------------------
+ 
+@PostMapping("/userregistersuploadmulti")
+public ResponseEntity<ResponseMessage> createUserRegisterUploadfiles(@RequestParam String  jsonData , @RequestParam MultipartFile[] files) {
+   
+	try {
+	       
+		UserRequestDto userRequestDto = new ObjectMapper().readValue(jsonData, UserRequestDto.class);
+
+		UserRegister userRegister = userRegisterService.uploadMultiUserRegister(userRequestDto, files);
 	
+	 if(userRegister!=null) {
+
+			return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseMessage(HttpURLConnection.HTTP_CREATED, Constants.SUCCESS, "online bookstore save successfully" ,userRegister));
+	 }else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(HttpURLConnection.HTTP_BAD_REQUEST, Constants.FAILED, "User Register Failed" ,userRegister));
+	   }
+			
+	}catch (Exception e) {
+		 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(HttpURLConnection.HTTP_INTERNAL_ERROR, Constants.FAILED, "Internal server error"));
+	}
+    	}
+}
