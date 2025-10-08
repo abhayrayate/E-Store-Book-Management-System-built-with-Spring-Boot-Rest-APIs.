@@ -56,23 +56,24 @@ This project is currently **in progress** 🚀 and aims to provide a complete pl
 ## ⚡ New Features Added
 
 ### 🔹 Caching Enabled
-- Added `@EnableCaching` in the main class to improve performance by reducing repetitive database calls.
-- Used `@Cacheable("getallusersList")` on the service method to cache user data for faster retrieval.
+> 🧠 **Purpose:** Improve performance by reducing repetitive database calls.  
+> ✅ Added `@EnableCaching` in the main class.  
+> ⚙️ Used `@Cacheable("getallusersList")` on the service method to cache user data for faster retrieval.
 
 ### 🔹 Get All Users API
-- Added a new service method `getallUser()` in `UserRegisterService` and implemented it in the service implementation class.
-- Endpoint:  
-
-- Description: Returns a list of all registered users.
-- This API uses Spring Cache to store user data temporarily, improving response time for repeated requests.
+> 🌐 **Service Method:** `getallUser()` added in `UserRegisterService` and implemented in the service class.  
+> 📡 **Endpoint:** `/getallusers`  
+> 📋 **Description:** Returns a list of all registered users.  
+> ⚡ Uses Spring Cache to improve response time for repeated requests.
 
 ---
 
 ## 🛠️ Database Tables
 
-- **register** → Stores user details  
-- **fileimages** → Stores file metadata (name, type, BLOB data)  
-
+| Table Name   | Description                                   |
+|---------------|-----------------------------------------------|
+| 🧍‍♂️ **register**   | Stores user details                        |
+| 🗂️ **fileimages**  | Stores file metadata (name, type, BLOB data) |
 
 
 
