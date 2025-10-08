@@ -1,7 +1,9 @@
 package in.abhayit.ServiceImpl;
 import java.util.Base64;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -96,6 +98,14 @@ public class UserRegisterServiceimpl implements UserRegisterService {
 				e.printStackTrace();
 			}
 			return user;
+	}
+
+	@Override
+	@Cacheable("getallusersList")
+	public List<UserRegister> getallUser() {
+		List<UserRegister> list = userRegisterRepo.findAll();
+		System.err.println("get all users");
+		return list;
 	}
 
 }

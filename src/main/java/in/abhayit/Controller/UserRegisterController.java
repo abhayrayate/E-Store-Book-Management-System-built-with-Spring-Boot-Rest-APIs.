@@ -1,5 +1,6 @@
 package in.abhayit.Controller;
 import java.net.HttpURLConnection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -133,4 +134,15 @@ public ResponseEntity<ResponseMessage> createUserRegisterUploadfiles(@RequestPar
 		 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(HttpURLConnection.HTTP_INTERNAL_ERROR, Constants.FAILED, "Internal server error"));
 	}
     	}
+
+//---------------------------get all details from db using cacheing
+
+
+		@GetMapping("/getallusers")
+		public List<UserRegister>getallUserDetails()
+		{
+			List<UserRegister> alluserdetails = userRegisterService.getallUser();
+			return alluserdetails;
+		}
+
 }
