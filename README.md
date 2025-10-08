@@ -14,7 +14,6 @@ This project is currently **in progress** 🚀 and aims to provide a complete pl
 - 📊 Entity management using **Spring Data JPA**
 - ⏱️ Automatic Timestamps with Hibernate annotations
 
----
 
 ## 🛠️ Tech Stack
 - **Backend:** Java 17+, Spring Boot, Spring Data JPA, Hibernate
@@ -51,7 +50,6 @@ This project is currently **in progress** 🚀 and aims to provide a complete pl
   "contactno": 9876543210
 }
 
----
 
 ## ⚡ New Features Added
 
