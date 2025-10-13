@@ -1,6 +1,7 @@
 package in.abhayit.Controller;
 
 import java.net.HttpURLConnection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,7 @@ public class CustomerController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(
 						HttpURLConnection.HTTP_BAD_REQUEST, Constants.FAILED, "Email and name cannot be empty"));
 			}
-			
+
 			Customer savedCustomer = customerService.insertCustomer(customerDto);
 
 			if (savedCustomer != null) {
@@ -98,16 +99,11 @@ public class CustomerController {
 
 	// ----------------------------saveorUpdate----------
 
-	@Operation(
-		    summary = "Create or Update Customer",
-		    description = "Creates a new customer if the ID is null, or updates an existing customer if the ID is provided."
-		)
-		@ApiResponses({
-		    @ApiResponse(responseCode = "201", description = "Customer created successfully"),
-		    @ApiResponse(responseCode = "200", description = "Customer updated successfully"),
-		    @ApiResponse(responseCode = "400", description = "Invalid customer data or validation failure"),
-		    @ApiResponse(responseCode = "500", description = "Internal server error")
-		})
+	@Operation(summary = "Create or Update Customer", description = "Creates a new customer if the ID is null, or updates an existing customer if the ID is provided.")
+	@ApiResponses({ @ApiResponse(responseCode = "201", description = "Customer created successfully"),
+			@ApiResponse(responseCode = "200", description = "Customer updated successfully"),
+			@ApiResponse(responseCode = "400", description = "Invalid customer data or validation failure"),
+			@ApiResponse(responseCode = "500", description = "Internal server error") })
 	@PostMapping("/customerSaveOrUpdate")
 	public ResponseEntity<ResponseMessage> customerSaveOrUpdate(@RequestBody Customer customer) {
 		try {
@@ -159,6 +155,29 @@ public class CustomerController {
 
 		}
 	}
-	
+
+	// --------------------------GetAllCusotmers-----
+	@GetMapping("/getAllCustomers")
+	@Operation(summary = "Get All Customers", description = "Fetches all customers from the database.")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Customers fetched successfully"),
+			@ApiResponse(responseCode = "400", description = "Failed to fetch customers or no customers found"),
+			@ApiResponse(responseCode = "500", description = "Internal server error") })
+	public ResponseEntity<ResponseMessage> getAllcustomers() {
+
+		try {
+			List<Customer> byAllCustomers = customerService.getByAllCustomers();
+
+			if (byAllCustomers != null && !byAllCustomers.isEmpty()) {
+				return ResponseEntity.ok(new ResponseMessage(HttpURLConnection.HTTP_OK, Constants.SUCCESS,
+						"Customers fetched successfully", byAllCustomers));
+			} else {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(
+						HttpURLConnection.HTTP_BAD_REQUEST, Constants.FAILED, "No customers found", byAllCustomers));
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(
+					HttpURLConnection.HTTP_INTERNAL_ERROR, Constants.FAILED, "Internal server error"));
+		}
+	}
 
 }

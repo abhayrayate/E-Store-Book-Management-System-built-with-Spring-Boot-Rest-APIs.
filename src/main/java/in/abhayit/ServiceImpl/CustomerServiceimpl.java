@@ -1,5 +1,6 @@
 package in.abhayit.ServiceImpl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,12 @@ public class CustomerServiceimpl implements CustomerService {
 			throw new RuntimeException("Customer Id Not Found");
 		}
 		return byId.get();
+	}
+
+	@Override
+	public List<Customer> getByAllCustomers() {
+		List<Customer> list = customerRepo.findAll();
+		return list;
 	}
 
 }
