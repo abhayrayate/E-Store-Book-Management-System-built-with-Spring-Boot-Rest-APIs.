@@ -93,5 +93,9 @@ Caching successfully implemented in the **Customer Module** to enhance API respo
 All APIs verified through multiple testing tools ensuring reliability and consistency.
 
 ---
+### ⚙️ Environment Profiles
+
+- Added `spring.profiles.active=perf` for environment-specific configurations.
+- Helps manage different setups (e.g., dev, test, prod) easily within the same project.
 
 
