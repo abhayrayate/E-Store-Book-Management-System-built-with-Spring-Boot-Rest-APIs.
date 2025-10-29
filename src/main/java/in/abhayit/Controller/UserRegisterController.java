@@ -21,7 +21,7 @@ import in.abhayit.Model.LoginRequestDto;
 import in.abhayit.Model.ResponseMessage;
 import in.abhayit.Model.UserRequestDto;
 import in.abhayit.Service.UserRegisterService;
-import in.abhayit.Utitity.Constants;
+import in.abhayit.Utility.Constants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

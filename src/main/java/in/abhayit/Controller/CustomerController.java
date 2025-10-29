@@ -4,6 +4,7 @@ import java.net.HttpURLConnection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import in.abhayit.Entity.Customer;
 import in.abhayit.Model.CustomerDto;
 import in.abhayit.Model.ResponseMessage;
 import in.abhayit.Service.CustomerService;
-import in.abhayit.Utitity.Constants;
+import in.abhayit.Utility.Constants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -173,6 +175,27 @@ public class CustomerController {
 			} else {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(
 						HttpURLConnection.HTTP_BAD_REQUEST, Constants.FAILED, "No customers found", byAllCustomers));
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(
+					HttpURLConnection.HTTP_INTERNAL_ERROR, Constants.FAILED, "Internal server error"));
+		}
+	}
+	
+//	----------------------pagination--
+	
+	@GetMapping("/fetchAllCustomersWithPagination")
+	public ResponseEntity<ResponseMessage> fetchAllCustomersWithPagination(@RequestParam int pageNo,@RequestParam int pageSize,@RequestParam String sortField,@RequestParam String sortOrder) {
+
+		try {
+			 Page<Customer> fetchAllCustomPages = customerService.fetchAllCustomPages(pageNo,pageSize,sortField,sortOrder);
+
+			if (fetchAllCustomPages != null && !fetchAllCustomPages.isEmpty()) {
+				return ResponseEntity.ok(new ResponseMessage(HttpURLConnection.HTTP_OK, Constants.SUCCESS,
+						"Customers Fetch  successfully", fetchAllCustomPages));
+			} else {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(
+						HttpURLConnection.HTTP_BAD_REQUEST, Constants.FAILED, "No customers found", fetchAllCustomPages));
 			}
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(

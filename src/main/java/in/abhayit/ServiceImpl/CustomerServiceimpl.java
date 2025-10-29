@@ -4,9 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import in.abhayit.Entity.Customer;
+import in.abhayit.Exception.CustomIDNotfoundException;
 import in.abhayit.Model.CustomerDto;
 import in.abhayit.Repository.CustomerRepository;
 import in.abhayit.Service.CustomerService;
@@ -53,18 +57,25 @@ public class CustomerServiceimpl implements CustomerService {
 
 	@Override
 	public Customer getByCustomersId(Long id) {
-		Optional<Customer> byId = customerRepo.findById(id);
-		if (!byId.isPresent()) {
-
-			throw new RuntimeException("Customer Id Not Found");
-		}
-		return byId.get();
+	    return customerRepo.findById(id)
+	            .orElseThrow(() -> new CustomIDNotfoundException("Customer Id Not Found: " + id));
 	}
+
 
 	@Override
 	public List<Customer> getByAllCustomers() {
 		List<Customer> list = customerRepo.findAll();
 		return list;
+	}
+
+	@Override
+	public Page<Customer> fetchAllCustomPages(int pageNo, int pageSize, String sortField, String sortOrder) {
+
+		Sort sort = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+
+		PageRequest request = PageRequest.of(pageNo, pageSize, sort);
+		
+		return customerRepo.findAll(request);
 	}
 
 }

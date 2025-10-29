@@ -1,4 +1,4 @@
-package in.abhayit.Utitity;
+package in.abhayit.Utility;
 
 public class Constants {
 
