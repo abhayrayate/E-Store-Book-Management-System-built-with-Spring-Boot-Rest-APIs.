@@ -291,8 +291,148 @@ public class BookIdNotFoundException extends RuntimeException {
 * Exception handling ensures clean and descriptive error responses.
 * Ready for production and scalable integration with other modules like Customer or Order.
 
+---# E-Store Book Management System
+
+An E-commerce Book Store Management System built using **Spring Boot, Spring Data JPA, Hibernate, and Swagger**.
+This project is currently in progress 🚀 and aims to provide a complete platform for **user registration, login, book management, and file (image) upload functionality**.
+
 ---
 
-💡 **Usage Tip:**
-➡️ तू हा full README.md file GitHub वर push करण्यासाठी तयार आहे.
+## ✨ Features
+
+### User Module
+
+* 🔐 **User Registration & Login** (with validation)
+* 👤 **Get User Details by ID**
+* 📂 **Upload Single & Multiple Images** (stored as BLOB in DB)
+* 🗄️ **Database Integration** with MySQL / Oracle
+* 📝 **API Documentation** using Swagger / OpenAPI 3
+* 📊 **Entity Management** using Spring Data JPA
+* ⏱️ **Automatic Timestamps** using Hibernate annotations
+
+### Book Module
+
+* 📚 **Add New Books** to the store
+* 📖 **Fetch All Books**
+* 🔍 **Fetch Book by ID**
+* ⏱️ Automatic creation and update timestamps
+* ⚡ **Caching Enabled** for faster book data retrieval using `@Cacheable`
+
+### Excel Upload Module
+
+* 📄 **Upload Excel File** containing book details
+* 🔹 Stores data from Excel into `BooksExcelFile` table
+* ⏱️ Automatic creation and update timestamps
+
+---
+
+## 🛠️ Tech Stack
+
+| Category   | Technology                                              |
+| ---------- | ------------------------------------------------------- |
+| Backend    | Java 17+, Spring Boot, Spring Data JPA, Hibernate       |
+| Database   | MySQL / Oracle                                          |
+| API Docs   | Swagger (springdoc-openapi)                             |
+| Build Tool | Maven                                                   |
+| Others     | Lombok, Validation, Multipart File Upload, Spring Cache |
+
+---
+
+## 🔄 Recent Updates
+
+### User Module
+
+* 🆕 **Feature:** User Registration with Multi-File Upload
+
+  * Users can register along with uploading multiple files (e.g., profile pictures, documents)
+  * Data stored in `register` table, files in `fileimages` table
+
+**API Endpoint:**
+
+| Method | Endpoint                    | Description                             |
+| ------ | --------------------------- | --------------------------------------- |
+| POST   | `/userregistersuploadmulti` | Register user and upload multiple files |
+
+---
+
+### Book Module
+
+**API Endpoints:**
+
+| Method | Endpoint            | Description                                           |
+| ------ | ------------------- | ----------------------------------------------------- |
+| POST   | `/savebooks`        | Creates a new book entry with name, title, and author |
+| GET    | `/getAllBooks`      | Fetches all books from the database                   |
+| GET    | `/getCustBook/{id}` | Fetches a specific book by its ID                     |
+
+**Request Example (POST /savebooks)**
+
+```json
+{
+  "name": "Spring Boot in Action",
+  "title": "Learn Spring Boot",
+  "author": "Craig Walls"
+}
+```
+
+**Response Example (Success)**
+
+```json
+{
+  "statusCode": 201,
+  "status": "SUCCESS",
+  "message": "Book has been successfully saved",
+  "data": {
+    "id": 1,
+    "name": "Spring Boot in Action",
+    "title": "Learn Spring Boot",
+    "author": "Craig Walls",
+    "createdDate": "2025-10-08T11:45:22",
+    "updatedDate": "2025-10-08T11:45:22"
+  }
+}
+```
+
+---
+
+### Excel Upload Module
+
+**API Endpoint:**
+
+| Method | Endpoint           | Description                               |
+| ------ | ------------------ | ----------------------------------------- |
+| POST   | `/uploadExcelFile` | Upload Excel file containing book details |
+
+**Request Example (POST /uploadExcelFile)**
+
+```bash
+curl -X POST "http://localhost:8080/uploadExcelFile" -F "file=@C:/path-to-file/books_data.xlsx"
+```
+
+**Successful Response**
+
+```json
+{
+  "statusCode": 200,
+  "status": "SUCCESS",
+  "message": "Excelfile save successfully"
+}
+```
+
+**Failure Response**
+
+```json
+{
+  "statusCode": 400,
+  "status": "FAILURE",
+  "message": "Excelfile save failed"
+}
+```
+
+💡 **Usage Notes:**
+
+* Ensure your Excel file is **.xlsx format**.
+* Invalid files will return **400 Bad Request**.
+* Uploaded data will be stored in `BooksExcel
+
 
