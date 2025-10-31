@@ -563,3 +563,28 @@ public interface BooksModuleMongoRepository extends MongoRepository<BooksModuleM
 MongoDB has been successfully integrated into the **E-Store Book Management System**.  
 This multi-database architecture combines the strengths of **SQL (MySQL)** and **NoSQL (MongoDB)**, ensuring flexibility, scalability, and performance for modern application needs.
 
+
+--------
+# Cart Module - E-Commerce Book Store
+
+This module is part of the E-Commerce Book Store web application.  
+It handles **Cart Management**, allowing users to **add, update, and delete items** from their cart.  
+The **total price** is automatically calculated as `quantity × book price`.
+
+
+## 📦 Entities
+
+### CartModule
+| Field         | Type             | Description                                   |
+|---------------|-----------------|-----------------------------------------------|
+| id            | Long            | Primary key, auto-generated                   |
+| customer      | Customer        | Many-to-One relationship with Customer       |
+| booksModule   | BooksModule     | Many-to-One relationship with BooksModule    |
+| quantity      | int             | Number of books in the cart                   |
+| totalPrice    | double          | Automatically calculated: `quantity × book price` |
+| createdDate   | LocalDateTime   | When the cart item was created                |
+| updatedDate   | LocalDateTime   | When the cart item was last updated           |
+
+**Constructor:**  
+```java
+public CartModule(int quantity, BooksModule booksModule, Customer customer)
