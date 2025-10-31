@@ -35,6 +35,10 @@ public class BooksModule {
 	@Column(name = "author")
 	private String author;
 	
+	@Column(name = "price")
+	private double price;
+
+	
 	@CreationTimestamp
 	@Column(name = "createdDate" ,updatable = false)
 	public LocalDateTime createdDate;
@@ -43,8 +47,6 @@ public class BooksModule {
 	@UpdateTimestamp
 	@Column(name = "updatedDate")
 	public LocalDateTime updatedDate;
-	
-	
 	
 
 }
