@@ -436,4 +436,130 @@ curl -X POST "http://localhost:8080/uploadExcelFile" -F "file=@C:/path-to-file/b
 * Invalid files will return **400 Bad Request**.
 * Uploaded data will be stored in `BooksExcel
 
+# 📘 E-Store Book Management System — MongoDB Integration
+
+## 🧩 Overview
+This module introduces **MongoDB integration** into the existing **E-Store Book Management System**.  
+It enables handling of document-based data (like books or user records) alongside relational data, providing a **multi-database architecture** using **Spring Boot**.
+
+---
+
+## ⚙️ Configuration
+
+### 1️⃣ Add Dependency (pom.xml)
+```xml
+<!-- MongoDB Driver -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-mongodb</artifactId>
+</dependency>
+```
+
+---
+
+### 2️⃣ Update `application.properties`
+```properties
+# MongoDB Configuration
+spring.data.mongodb.host=localhost
+spring.data.mongodb.port=27017
+spring.data.mongodb.database=book_store_mongo
+
+# MySQL (Existing)
+spring.datasource.url=jdbc:mysql://localhost:3306/book_store
+spring.datasource.username=root
+spring.datasource.password=yourpassword
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+```
+
+---
+
+## 🗄️ MongoDB Entity Example
+```java
+package in.abhayit.Entity.mongo;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Document(collection = "user_registers")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class BooksModuleMongo {
+
+    @Id
+    private String id;
+    private String name;
+    private String title;
+    private String author;
+}
+```
+
+---
+
+## 🧠 Repository Layer
+```java
+package in.abhayit.Repository.mongo;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import in.abhayit.Entity.mongo.BooksModuleMongo;
+
+public interface BooksModuleMongoRepository extends MongoRepository<BooksModuleMongo, String> {
+}
+```
+
+---
+
+## 🚀 API Endpoints
+
+| Method | Endpoint              | Description |
+|--------|-----------------------|--------------|
+| POST   | `/mongo/saveBook`     | Save a new book document in MongoDB |
+| GET    | `/mongo/getAllBooks`  | Retrieve all MongoDB books |
+| GET    | `/mongo/getBook/{id}` | Fetch a specific MongoDB book by ID |
+
+---
+
+## 📦 Features
+- Dual database support (**MySQL + MongoDB**)
+- Independent repositories for relational and document data
+- Spring Boot auto-configuration for both databases
+- Lightweight and scalable for NoSQL data
+
+---
+
+## 🧪 Testing Options
+- **Postman** for API testing  
+- **MongoDB Compass** for database verification  
+- **Swagger UI** at `/swagger-ui.html` for API docs
+
+---
+
+## 🧾 Example MongoDB Response
+
+### Request (POST /mongo/saveBook)
+```json
+{
+  "name": "Java Made Easy",
+  "title": "Spring Boot Guide",
+  "author": "Abhay Rayate"
+}
+```
+
+### Response
+```json
+{
+  "statusCode": 200,
+  "status": "SUCCESS",
+  "message": "Book saved successfully in MongoDB!"
+}
+```
+
+---
+
+## ✅ Summary
+MongoDB has been successfully integrated into the **E-Store Book Management System**.  
+This multi-database architecture combines the strengths of **SQL (MySQL)** and **NoSQL (MongoDB)**, ensuring flexibility, scalability, and performance for modern application needs.
 
