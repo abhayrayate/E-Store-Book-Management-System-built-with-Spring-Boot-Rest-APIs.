@@ -586,6 +586,117 @@ The **total price** is automatically calculated as `quantity × book price`.
 | createdDate   | LocalDateTime   | When the cart item was created                |
 | updatedDate   | LocalDateTime   | When the cart item was last updated           |
 
-**Constructor:**  
+
+
+---
+
+## ⚡ Features / APIs
+
+### 1. Add Item to Cart
+- **Endpoint:** `POST /addcart/add`  
+- **Description:** Adds a book to customer's cart or updates quantity if already exists.  
+- **Request Parameters:**
+  - `customerId` (Long, required)  
+  - `bookId` (Long, required)  
+  - `quantity` (int, required)  
+- **Responses:**
+  - `201` → Cart item added successfully  
+  - `400` → Failed to add cart item  
+  - `500` → Internal server error  
+
+---
+
+### 2. Update Item in Cart
+- **Endpoint:** `PUT /addcart/update/{id}`  
+- **Description:** Updates an existing cart item by ID. You can change **quantity, book, or customer**.  
+- **Request Body:** JSON of `CartModule`  
+- **Responses:**
+  - `200` → Cart updated successfully  
+  - `404` → Cart not found  
+  - `500` → Internal server error  
+
+**Example Request Body:**
+```json
+{
+  "quantity": 3,
+  "booksModule": { "id": 5 },
+  "customer": { "id": 1 }
+}
+```
+
+---
+
+### 3. Delete Item from Cart
+- **Endpoint:** `DELETE /addcart/delete/{id}`  
+- **Description:** Deletes a cart item by ID.  
+- **Responses:**
+  - `200` → Cart deleted successfully  
+  - `500` → Internal server error  
+
+---
+
+## 📌 Repository Layer
+- **Interface:** `CartModuleRepo` extends `JpaRepository<CartModule, Long>`  
+- **Custom Method:**  
 ```java
-public CartModule(int quantity, BooksModule booksModule, Customer customer)
+CartModule findByCustomerAndBooksModule(Customer customer, BooksModule booksModule);
+```
+Prevents duplicate cart entries for the same book and customer.
+
+---
+
+## ⚙ Service Layer
+- **Interface:** `CartModuleService`
+    - `addToCart(Long customerId, Long bookId, int quantity)`  
+    - `updateCart(Long id, CartModule updatedCart)`  
+    - `deleteToCart(Long id)`  
+
+- **Implementation:** `CartModuleServiceImpl`  
+    - Checks if customer and book exist  
+    - Updates quantity if cart item already exists  
+    - Calculates total price automatically  
+    - Handles add, update, delete operations
+
+---
+
+## 📌 Controller Layer
+- **Controller:** `CartModuleController`  
+- **Swagger Annotations** for documentation  
+- Endpoints:
+    - `POST /addcart/add` → Add item  
+    - `PUT /addcart/update/{id}` → Update item  
+    - `DELETE /addcart/delete/{id}` → Delete item  
+
+---
+
+## 📖 Swagger UI
+- **URL:** `http://localhost:8080/swagger-ui.html`  
+- Test all Cart APIs directly from the UI  
+
+---
+
+## 🏃 How to Run
+1. Clone the repository  
+2. Configure database in `application.properties`:
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/your_db
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.hibernate.ddl-auto=update
+```
+3. Run the application:
+```bash
+mvn spring-boot:run
+```
+4. Test APIs using **Postman** or **Swagger UI**
+
+---
+
+## ✨ Notes
+- `totalPrice` is auto-calculated: `quantity × book price`  
+- Custom exceptions implemented:
+  - `CustomIDNotfoundException` → When customer not found  
+  - `BookIdNotFoundException` → When book not found  
+- Prevents duplicate cart items for the same book and customer  
+
+---
