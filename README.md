@@ -4,7 +4,8 @@
 <img width="1303" height="681" alt="Screenshot 2025-10-08 172548" src="https://github.com/user-attachments/assets/f2a1367b-ce9c-483a-99b6-848f6ad4f641" />
 <img width="1366" height="768" alt="Screenshot (115)" src="https://github.com/user-attachments/assets/90560a03-4c7b-4ff8-b81f-5518b457cdcb" />
 <img width="1365" height="589" alt="Screenshot 2025-10-29 124405" src="https://github.com/user-attachments/assets/89f6bd60-91ad-40b8-ba6a-29893bbc8876" />
-![Uploading Screenshot (136).png…]()
+<img width="1366" height="768" alt="Screenshot (136)" src="https://github.com/user-attachments/assets/f6cd7812-9e4d-46c1-912f-26a1133e53fd" />
+<img width="1352" height="246" alt="Screenshot 2025-10-31 211041" src="https://github.com/user-attachments/assets/6b7665a4-4074-490c-b8b5-4664c39cb47b" />
 
 # 📚 E-Store Book Management System  
 
