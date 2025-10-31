@@ -10,9 +10,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import in.abhayit.Entity.Customer;
+import in.abhayit.Entity.mongo.CustomerMongo;
 import in.abhayit.Exception.CustomIDNotfoundException;
 import in.abhayit.Model.CustomerDto;
 import in.abhayit.Repository.CustomerRepository;
+import in.abhayit.Repository.mongo.CustomerRepoMongo;
 import in.abhayit.Service.CustomerService;
 
 @Service
@@ -20,6 +22,10 @@ public class CustomerServiceimpl implements CustomerService {
 
 	@Autowired
 	CustomerRepository customerRepo;
+	
+	@Autowired
+	CustomerRepoMongo customerRepoMongo;
+	
 
 	@Override
 	public Customer insertCustomer(CustomerDto customerdto) {
@@ -27,6 +33,12 @@ public class CustomerServiceimpl implements CustomerService {
 		cust.setName(customerdto.getName());
 		cust.setEmail(customerdto.getEmail());
 		customerRepo.save(cust);
+
+		
+		CustomerMongo custMongo = new CustomerMongo();
+		custMongo.setName(customerdto.getName());
+		custMongo.setEmail(customerdto.getEmail());
+		customerRepoMongo.save(custMongo);
 		return cust;
 	}
 

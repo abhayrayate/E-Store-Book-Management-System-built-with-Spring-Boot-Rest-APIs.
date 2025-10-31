@@ -8,22 +8,36 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import in.abhayit.Entity.BooksModule;
+import in.abhayit.Entity.mongo.BooksModuleMongo;
 import in.abhayit.Exception.BookIdNotFoundException;
 import in.abhayit.Repository.BooksModuleRepo;
+import in.abhayit.Repository.mongo.BooksModuleMongoRepo;
 import in.abhayit.Service.BooksService;
 
 @Service
 public class BooksServiceImpl implements BooksService{
 	
 	@Autowired BooksModuleRepo booksModuleRepo;
+	
+	@Autowired BooksModuleMongoRepo booksModuleMongoRepo;
 
-	@Override
-	public BooksModule custmerSaveBooks(BooksModule booksModule) {
-		
-		BooksModule bookModule = booksModuleRepo.save(booksModule);
-		
-		return bookModule;
-	}
+	 @Override
+	    public BooksModule custmerSaveBooks(BooksModule booksModule) {
+		 
+	        //  Save in MySQL
+	        BooksModule savedBook = booksModuleRepo.save(booksModule);
+
+	        //  Save in MongoDB
+	        BooksModuleMongo mongoBook = new BooksModuleMongo();
+	        mongoBook.setName(savedBook.getName());   
+	        mongoBook.setTitle(savedBook.getTitle());
+	        mongoBook.setAuthor(savedBook.getAuthor());
+
+	        booksModuleMongoRepo.save(mongoBook);
+
+	        return savedBook;
+	    }
+
 
 	@Override
 	@Cacheable(value = "getAllBooks")

@@ -9,10 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import in.abhayit.Entity.FilesEntity;
 import in.abhayit.Entity.UserRegister;
+import in.abhayit.Entity.mongo.UserRegisterMongo;
 import in.abhayit.Model.LoginRequestDto;
 import in.abhayit.Model.UserRequestDto;
 import in.abhayit.Repository.FileRepo;
 import in.abhayit.Repository.UserRegisterRepo;
+import in.abhayit.Repository.mongo.UserRegisterMongoRepo;
 import in.abhayit.Service.UserRegisterService;
 
 @Service
@@ -25,6 +27,8 @@ public class UserRegisterServiceimpl implements UserRegisterService {
 	@Autowired
 	private FileRepo fileRepo;
 
+	@Autowired
+	private UserRegisterMongoRepo userRegisterMongoRepo;
   
 	@Override
 	public UserRegister insertUserRegister(UserRequestDto userRequestDto) {
@@ -36,6 +40,16 @@ public class UserRegisterServiceimpl implements UserRegisterService {
 		user.setPassword(Base64.getEncoder().encodeToString(userRequestDto.getPassword().getBytes()));
 		user.setContactno(userRequestDto.getContactno());
 		userRegisterRepo.save(user);
+		
+		UserRegisterMongo userMong = new UserRegisterMongo();
+		userMong.setFirstName(userRequestDto.getFirstName());
+		userMong.setLastName(userRequestDto.getLastName());
+		userMong.setEmail(userRequestDto.getEmail());
+		userMong.setPassword(Base64.getEncoder().encodeToString(userRequestDto.getPassword().getBytes()));
+		userMong.setContactId(userRequestDto.getContactno());
+		userRegisterMongoRepo.save(userMong);
+		
+		
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
