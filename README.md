@@ -700,3 +700,165 @@ mvn spring-boot:run
 - Prevents duplicate cart items for the same book and customer  
 
 ---
+# 📘 Order Management Module (Spring Boot)
+
+This module adds **Order Placement functionality** to your existing Spring Boot project using **JPA, Hibernate, DTO, Controller, Service, Repository patterns**.
+
+---
+
+## 🚀 Features Included
+
+* Place orders for books by customer ID
+* Restrict non-prime users to:
+
+  * Only **1 book per order**
+  * Only **1 order per week**
+* Prime users can order **multiple books** with no weekly limit
+* Validations:
+
+  * Check if customer exists
+  * Check if selected books exist
+  * Check ordering rules based on prime/non-prime status
+* Auto timestamps: `createdDate`, `updatedDate`
+* Response with structured `ResponseMessage`
+
+---
+
+## 📁 Project Structure (Added Files)
+
+```
+in.abhayit.Entity.OrderModule
+in.abhayit.Model.OrderModuleDto
+in.abhayit.Controller.OrderController
+in.abhayit.Repository.OrderModuleRepo
+in.abhayit.Service.OrderService
+in.abhayit.ServiceImpl.OrderServiceimpl
+```
+
+---
+
+## 🛠️ Entity: OrderModule
+
+Handles order table mapping.
+
+* Auto `id`
+* `bookId`
+* `customerId`
+* `status`
+* Creation & Update timestamps
+
+---
+
+## 📦 DTO: OrderModuleDto
+
+Used to accept order request:
+
+* `customerId`
+* `List<String> title` (book titles)
+
+---
+
+## 🎮 Controller: OrderController
+
+API endpoint:
+
+```
+POST /orderplaced
+```
+
+Accepts `OrderModuleDto` and returns `ResponseMessage` with:
+
+* HTTP code
+* success/fail status
+* message
+* data
+
+---
+
+## 🧠 Business Logic: OrderServiceimpl
+
+Performs validations:
+
+1. Customer exists or not
+2. If **non-prime**:
+
+   * Only 1 book allowed
+   * Only 1 order per week allowed
+3. Finds book by title
+4. Creates order entries for each valid book
+
+Returns appropriate success/error messages.
+
+---
+
+## 💽 Repository: OrderModuleRepo
+
+Contains two queries:
+
+1. Check any order placed in last 7 days
+2. Find book by title
+
+---
+
+## 📲 API Request Example
+
+### **POST** `/orderplaced`
+
+**Request Body:**
+
+```json
+{
+  "customerId": 7,
+  "title": ["Zero to One", "Deep Work"]
+}
+```
+
+**Success Response:**
+
+```json
+{
+  "statusCode": 201,
+  "status": "success",
+  "message": "Order placed successfully",
+  "data": "Order Placed successfully. Thank you.!"
+}
+```
+
+---
+
+## 🔧 Database Requirements
+
+### Table: **orders**
+
+Columns:
+
+* id (PK, auto increment)
+* book_id
+* customer_id
+* status
+* created_date (timestamp)
+* updated_date (timestamp)
+
+Ensure your database table names match entity annotations.
+
+---
+
+## 📝 Notes
+
+* Ensure `BooksModule` entity exists with a `title` field
+* Ensure `UserRegister` entity contains `prime` boolean
+* API can be tested using Postman or Swagger
+
+---
+
+## 🎯 Final Output Behavior
+
+* Prime users can place multiple book orders any time
+* Non-prime users get limited based on validations
+* Clean error handling with proper messages
+
+---
+
+## 🙌 Author
+
+Abhay Rayate – Spring Boot | Java Developer
