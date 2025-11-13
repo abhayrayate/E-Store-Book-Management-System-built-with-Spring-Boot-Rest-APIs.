@@ -6,6 +6,7 @@
 <img width="1365" height="589" alt="Screenshot 2025-10-29 124405" src="https://github.com/user-attachments/assets/89f6bd60-91ad-40b8-ba6a-29893bbc8876" />
 <img width="1366" height="768" alt="Screenshot (136)" src="https://github.com/user-attachments/assets/f6cd7812-9e4d-46c1-912f-26a1133e53fd" />
 <img width="1352" height="246" alt="Screenshot 2025-10-31 211041" src="https://github.com/user-attachments/assets/6b7665a4-4074-490c-b8b5-4664c39cb47b" />
+<img width="1365" height="388" alt="image" src="https://github.com/user-attachments/assets/edbfdca0-1694-4054-b333-f1f8e4fe7ee1" />
 
 # 📚 E-Store Book Management System  
 
@@ -858,6 +859,49 @@ Ensure your database table names match entity annotations.
 * Clean error handling with proper messages
 
 ---
+# 📘 Rating & Review Module
+
+This module adds **Rating & Review** functionality to your existing Spring Boot project.  
+Users can rate books, write reviews, view all reviews, and delete reviews.
+
+## 🚀 Features
+- Add rating & review for books
+- Fetch all reviews
+- Delete review by ID
+- Auto timestamps
+- Clean API responses
+- DTO-based request handling
+
+## 🛠️ Technologies Used
+- Java 17+
+- Spring Boot
+- Spring MVC
+- Spring Data JPA
+- Hibernate
+- Oracle/MySQL
+- Lombok
+
+## 📂 Project Structure
+```
+in.abhayit.Controller.RatingController
+in.abhayit.Service.RatingService
+in.abhayit.ServiceImpl.RatingServiceImpl
+in.abhayit.Entity.Rating
+in.abhayit.Model.RatingDto
+in.abhayit.Repository.RatingRepo
+```
+
+## 📡 API Endpoints
+
+### POST /ratingbooks
+Add Rating & Review
+
+### GET /getAllreviews
+Fetch all reviews
+
+### DELETE /deletereview/{id}
+Delete review by ID
+
 
 ## 🙌 Author
 
