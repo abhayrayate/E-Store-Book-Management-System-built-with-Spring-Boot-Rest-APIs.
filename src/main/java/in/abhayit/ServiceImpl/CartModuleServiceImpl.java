@@ -71,21 +71,21 @@ public class CartModuleServiceImpl implements CartModuleService {
 	    CartModule existingCart = cartModuleRepository.findById(id)
 	            .orElseThrow(() -> new RuntimeException("Cart not found with id: " + id));
 
-	    // quantity update कर
+	    // quantity update
 	    if (updatedCart.getQuantity() > 0) {
 	        existingCart.setQuantity(updatedCart.getQuantity());
 	    }
 
-	    // book update कर
+	    // book update 
 	    if (updatedCart.getBooksModule() != null) {
 	        existingCart.setBooksModule(updatedCart.getBooksModule());
 	    }
 
-	    // customer update कर
+	    // customer update 
 	    if (updatedCart.getCustomer() != null) {
 	        existingCart.setCustomer(updatedCart.getCustomer());
 	    }
-	 // totalPrice calculate कर (book price * quantity)
+	 // totalPrice calculate  (book price * quantity)
 	    if (existingCart.getBooksModule() != null) {
 	        double totalPrice = existingCart.getQuantity() * existingCart.getBooksModule().getPrice();
 	        existingCart.setTotalPrice(totalPrice);

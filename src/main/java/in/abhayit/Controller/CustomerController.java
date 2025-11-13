@@ -20,6 +20,7 @@ import in.abhayit.Model.CustomerDto;
 import in.abhayit.Model.ResponseMessage;
 import in.abhayit.Service.CustomerService;
 import in.abhayit.Utility.Constants;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -202,5 +203,17 @@ public class CustomerController {
 					HttpURLConnection.HTTP_INTERNAL_ERROR, Constants.FAILED, "Internal server error"));
 		}
 	}
+	
+	
+	//Circuit Breaker 
+	@GetMapping("/getcustomer")
+	@CircuitBreaker(name = "showData", fallbackMethod = "fallbackgetData")
+	public String showData() throws Exception {
+	    throw new Exception();
+	}
 
+	public String fallbackgetData(Throwable th) {
+	    return "Payment Service is Unavailable......";
+	}
+	
 }

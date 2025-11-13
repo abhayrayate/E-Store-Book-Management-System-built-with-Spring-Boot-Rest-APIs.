@@ -1,4 +1,5 @@
 package in.abhayit.Entity;
+
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,34 +11,26 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="register")
+@Table(name = "orders")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class UserRegister {
+
+public class OrderModule {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String firstname;
-	private String lastname;
-	private String email;
-	private String password;
-	private Long contactno;
-	
-	
-	@Column(name = "prime",columnDefinition = "TINYINT(1)")
-	private Boolean prime;
+	private Long bookId;
+	private Long customerId;
+	private Boolean status;
 	
 	@CreationTimestamp
+	@Column(name = "createdDate" ,updatable = false)
 	public LocalDateTime createdDate;
-	
 	
 	@UpdateTimestamp
 	public LocalDateTime updatedDate;
+	
 }
