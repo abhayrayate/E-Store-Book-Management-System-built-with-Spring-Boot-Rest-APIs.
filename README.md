@@ -858,6 +858,49 @@ Ensure your database table names match entity annotations.
 * Clean error handling with proper messages
 
 ---
+# 📘 Rating & Review Module
+
+This module adds **Rating & Review** functionality to your existing Spring Boot project.  
+Users can rate books, write reviews, view all reviews, and delete reviews.
+
+## 🚀 Features
+- Add rating & review for books
+- Fetch all reviews
+- Delete review by ID
+- Auto timestamps
+- Clean API responses
+- DTO-based request handling
+
+## 🛠️ Technologies Used
+- Java 17+
+- Spring Boot
+- Spring MVC
+- Spring Data JPA
+- Hibernate
+- Oracle/MySQL
+- Lombok
+
+## 📂 Project Structure
+```
+in.abhayit.Controller.RatingController
+in.abhayit.Service.RatingService
+in.abhayit.ServiceImpl.RatingServiceImpl
+in.abhayit.Entity.Rating
+in.abhayit.Model.RatingDto
+in.abhayit.Repository.RatingRepo
+```
+
+## 📡 API Endpoints
+
+### POST /ratingbooks
+Add Rating & Review
+
+### GET /getAllreviews
+Fetch all reviews
+
+### DELETE /deletereview/{id}
+Delete review by ID
+
 
 ## 🙌 Author
 
